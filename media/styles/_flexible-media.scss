@@ -1,0 +1,417 @@
+.flexible-media {
+  background: none;
+
+  &.hero {
+    background: url('../img/logo/ih-loading-icon.png') center center no-repeat $body-bg;
+  }
+
+  .overlay {
+    @include trans-overlay(transparent, transparent);
+  	padding: rem-calc(8);
+  	color: $body-bg;
+    height: 100%;
+
+  	h1, h2, p, a {
+    	color: $body-bg;
+      text-align: center;
+  	}
+    h1 {
+      font-size: rem-calc(40);
+      margin-bottom: 0;
+      line-height: 1.7;
+      @include title-hightlite(12px);
+      @media #{$small-only} {
+        font-size: rem-calc(24);
+        line-height: 1.75;
+      }
+    }
+    h2 {
+      color: $body-bg;
+      font-size: rem-calc(24);
+      padding-bottom: rem-calc(6);
+      line-height: 1.85;
+      @include title-hightlite(8px);
+      @media #{$small-only} {
+        font-size: rem-calc(16);
+        padding-bottom: rem-calc(4);
+      }
+    }
+  	p {
+  		font-size:: $h3-font-size;
+			@media #{$small-only} {
+				font-size: $orbit-caption-sm-font-size;
+			}
+  	}
+    .labels {
+      margin-bottom: 0;
+      @include centered-list;
+      &.bottom {
+        position: absolute;
+        bottom: 5%;
+        width: 100%;
+      }
+    }
+    .label {
+      @include add-separator($body-bg, rem-calc(-12));
+      color: $body-bg;
+    }
+  }
+  
+  .art-content {
+    h1, h2, h3, h4, h5, h6, p, a {
+      text-align: initial;
+      color: initial;
+    }
+    p {
+      font-size:: $h3-font-size;
+      @media #{$small-only} {
+        font-size: $h7-font-size;
+      }
+    }
+    a {
+      color: $primary-color
+    }
+    /* standard font overrides */
+    blockquote {
+      text-align: center;
+      em {
+        font-size: $h2-font-size;
+        line-height: 1.5;
+      }
+      p {
+        position: relative;
+        display: inline-block;
+        font-style: italic;
+        font-size: rem-calc(32);
+        &:before {
+          content: '\201c';
+          font-size: 100%;
+          position: absolute;
+          top: rem-calc(-3);
+          left: rem-calc(-18);
+        }
+        &:after {
+          content: '\201d';
+          font-size: 100%;
+          position: absolute;
+          bottom: rem-calc(3);
+          right: rem-calc(-18);
+        }
+      }
+    }
+    &.vertical-fit {
+      padding-top: 0;
+      padding-bottom: 0
+    }
+    padding: rem-calc(24);
+    position: relative;
+    z-index: 200;
+  }
+  
+  .panel-inner {
+    @extend .row;
+    max-width: none;
+    width: auto;
+    margin-right: rem-calc(-24);
+    margin-left: rem-calc(-24);
+    padding-right: rem-calc(12);
+    padding-left: rem-calc(12);
+  } 
+
+  .allow-click {
+    pointer-events: none;
+  }
+
+  $fm-visibility-factor: 1.0;
+
+  // height
+  $fm-short-screen-height: 240px;
+  $fm-medium-screen-height: 620px;
+  $fm-tall-screen-height: 788px;
+
+  // width
+  $fm-small-screen-width: 480px;
+  $fm-medium-screen-width: 768px;
+  $fm-large-screen-width: 1024px;
+  $fm-wide-screen-width: 1320px;
+
+  &.maintain-ratio {
+    &.hero {
+      overflow: hidden;
+  		@media #{$small-only} {
+        // show image
+  	    @include maintain-ratio(768 480);
+        width: auto;
+
+        &.portrait-support {
+          @include maintain-ratio(768 975);
+          width: auto;
+        }
+  	  }
+  		@media #{$medium-up} {
+        // show image
+  	    @include maintain-ratio(1920 1008);
+  	  }
+    }
+
+    &.video {
+      @media #{$small-up} {
+        // show video
+        @include maintain-ratio(1920 1080);
+        width: auto;
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+
+      .flex-video iframe,
+      .flex-video object,
+      .flex-video embed,
+      .flex-video video {
+        right: 0;
+        margin: auto;
+      }
+
+      .flex-video.widescreen {
+        @media #{$small-up} {
+          @include maintain-ratio(1920 1080);
+          width: auto;
+        }
+      }
+
+      &.video-optimal-fit {
+        // small screen short height breakpoint
+        @media #{$screen} and (min-height: $fm-short-screen-height + 1px) and (max-height: $fm-medium-screen-height) and (min-width: $fm-small-screen-width) {
+          @include maintain-ratio(1920 ((800px / 1px) * $fm-visibility-factor));
+        }
+        // small screen medium height breakpoint
+        @media #{$screen} and (min-height: $fm-medium-screen-height) and (max-height: $fm-tall-screen-height) and (min-width: $fm-small-screen-width) {
+          @include maintain-ratio(1920 ((1080px / 1px) * $fm-visibility-factor));
+        }
+        // small screen tall height breakpoint
+        @media #{$screen} and (min-height: $fm-tall-screen-height + 1px) and (min-width: $fm-small-screen-width) {
+          //@include maintain-ratio(1920 (($fm-tall-screen-height / 1px) * $fm-visibility-factor)); // looking better without
+        }
+
+        // medium screen short height breakpoint
+        @media #{$screen} and (min-height: $fm-short-screen-height + 1px) and (max-height: $fm-medium-screen-height) and (min-width: $fm-medium-screen-width) {
+          @include maintain-ratio(1920 ((800px / 1px) * $fm-visibility-factor));
+        }
+        // medium screen medium height breakpoint
+        @media #{$screen} and (min-height: $fm-medium-screen-height) and (max-height: $fm-tall-screen-height) and (min-width: $fm-medium-screen-width) {
+          @include maintain-ratio(1920 ((850px / 1px) * $fm-visibility-factor));
+        }
+        // medium screen tall height breakpoint
+        @media #{$screen} and (min-height: $fm-tall-screen-height + 1px) and (min-width: $fm-medium-screen-width) {
+          //@include maintain-ratio(1920 (($fm-tall-screen-height / 1px) * $fm-visibility-factor)); // looking better without
+        }
+
+        // large screen short height breakpoint
+        @media #{$screen} and (min-height: $fm-short-screen-height + 1px) and (max-height: $fm-medium-screen-height) and (min-width: $fm-large-screen-width) {
+          @include maintain-ratio(1920 ((850px / 1px) * $fm-visibility-factor));
+        }
+        // large screen medium height breakpoint
+        @media #{$screen} and (min-height: $fm-medium-screen-height + 1px) and (max-height: $fm-tall-screen-height) and (min-width: $fm-large-screen-width) {
+          @include maintain-ratio(1920 ((850px / 1px) * $fm-visibility-factor));
+        }
+        // large screen tall height breakpoint
+        @media #{$screen} and (min-height: $fm-tall-screen-height + 1px) and (min-width: $fm-large-screen-width) {
+          @include maintain-ratio(1920 ((850px / 1px) * $fm-visibility-factor));
+        }
+
+        // wide screen short height breakpoint
+        @media #{$screen} and (min-height: $fm-short-screen-height + 1px) and (max-height: $fm-medium-screen-height) and (min-width: $fm-wide-screen-width) {
+          @include maintain-ratio(1920 ((575px / 1px) * $fm-visibility-factor));
+        }
+        // wide screen medium height breakpoint
+        @media #{$screen} and (min-height: $fm-medium-screen-height + 1px) and (max-height: $fm-tall-screen-height) and (min-width: $fm-wide-screen-width) {
+          @include maintain-ratio(1920 ((850px / 1px) * $fm-visibility-factor));
+        }
+        // wide screen tall height breakpoint
+        @media #{$screen} and (min-height: $fm-tall-screen-height + 1px) and (min-width: $fm-wide-screen-width) {
+          @include maintain-ratio(1920 ((850px / 1px) * $fm-visibility-factor));
+        }
+
+        .flex-video.widescreen {
+          background-color: $white;
+
+          // small screen short height breakpoint
+          @media #{$screen} and (min-height: $fm-short-screen-height + 1px) and (max-height: $fm-medium-screen-height) and (min-width: $fm-small-screen-width) {
+            @include maintain-ratio(1920 ((800px / 1px) * $fm-visibility-factor));
+
+            iframe {
+              width: percentage((((800px / 1px) * $fm-visibility-factor) / 1920) / (9 / 16));
+            } 
+          }
+          // small screen medium height breakpoint
+          @media #{$screen} and (min-height: $fm-medium-screen-height) and (max-height: $fm-tall-screen-height) and (min-width: $fm-small-screen-width) {
+            @include maintain-ratio(1920 ((1080px / 1px) * $fm-visibility-factor));
+
+            iframe {
+              width: percentage((((1080px / 1px) * $fm-visibility-factor) / 1920) / (9 / 16));
+            }
+          }
+          // small screen tall height breakpoint
+          @media #{$screen} and (min-height: $fm-tall-screen-height) and (min-width: $fm-small-screen-width) {
+            //@include maintain-ratio(1920 (($fm-tall-screen-height / 1px) * $fm-visibility-factor)); // looking better without
+
+            iframe {
+              //width: percentage(((($fm-tall-screen-height / 1px) * $fm-visibility-factor) / 1920) / (9 / 16)); // looking better without
+            }
+          }
+
+          // medium screen short height breakpoint
+          @media #{$screen} and (min-height: $fm-short-screen-height + 1px) and (max-height: $fm-medium-screen-height) and (min-width: $fm-medium-screen-width) {
+            @include maintain-ratio(1920 ((800px / 1px) * $fm-visibility-factor));
+
+            iframe {
+              width: percentage((((800px / 1px) * $fm-visibility-factor) / 1920) / (9 / 16));
+            } 
+          }
+          // medium screen medium height breakpoint
+          @media #{$screen} and (min-height: $fm-medium-screen-height) and (max-height: $fm-tall-screen-height) and (min-width: $fm-medium-screen-width) {
+            @include maintain-ratio(1920 ((850px / 1px) * $fm-visibility-factor));
+
+            iframe {
+              width: percentage((((850px / 1px) * $fm-visibility-factor) / 1920) / (9 / 16));
+            }
+          }
+          // medium screen tall height breakpoint
+          @media #{$screen} and (min-height: $fm-tall-screen-height) and (min-width: $fm-medium-screen-width) {
+            //@include maintain-ratio(1920 (($fm-tall-screen-height / 1px) * $fm-visibility-factor)); // looking better without
+
+            iframe {
+              //width: percentage(((($fm-tall-screen-height / 1px) * $fm-visibility-factor) / 1920) / (9 / 16)); // looking better without
+            }
+          }
+
+          // large screen short height breakpoint
+          @media #{$screen} and (min-height: $fm-short-screen-height + 1px) and (max-height: $fm-medium-screen-height) and (min-width: $fm-large-screen-width) {
+            @include maintain-ratio(1920 ((850px / 1px) * $fm-visibility-factor));
+
+            iframe {
+              width: percentage((((850px / 1px) * $fm-visibility-factor) / 1920) / (9 / 16));
+            } 
+          }
+          // large screen medium height breakpoint
+          @media #{$screen} and (min-height: $fm-medium-screen-height + 1px) and (max-height: $fm-tall-screen-height) and (min-width: $fm-large-screen-width) {
+            @include maintain-ratio(1920 ((850px / 1px) * $fm-visibility-factor));
+
+            iframe {
+              width: percentage((((850px / 1px) * $fm-visibility-factor) / 1920) / (9 / 16));
+            } 
+          }
+          // large screen tall height breakpoint
+          @media #{$screen} and (min-height: $fm-tall-screen-height + 1px) and (min-width: $fm-large-screen-width) {
+            @include maintain-ratio(1920 ((850px / 1px) * $fm-visibility-factor));
+
+            iframe {
+              width: percentage((((850px / 1px) * $fm-visibility-factor) / 1920) / (9 / 16));
+            } 
+          }
+
+          // wide screen short height breakpoint
+          @media #{$screen} and (min-height: $fm-short-screen-height + 1px) and (max-height: $fm-medium-screen-height) and (min-width: $fm-wide-screen-width) {
+            @include maintain-ratio(1920 ((575px / 1px) * $fm-visibility-factor));
+
+            iframe {
+              width: percentage((((575px / 1px) * $fm-visibility-factor) / 1920) / (9 / 16));
+            } 
+          }
+          // wide screen medium height breakpoint
+          @media #{$screen} and (min-height: $fm-medium-screen-height + 1px) and (max-height: $fm-tall-screen-height) and (min-width: $fm-wide-screen-width) {
+            @include maintain-ratio(1920 ((850px / 1px) * $fm-visibility-factor));
+
+            iframe {
+              width: percentage((((850px / 1px) * $fm-visibility-factor) / 1920) / (9 / 16));
+            } 
+          }
+          // wide screen tall height breakpoint
+          @media #{$screen} and (min-height: $fm-tall-screen-height + 1px) and (min-width: $fm-wide-screen-width) {
+            @include maintain-ratio(1920 ((850px / 1px) * $fm-visibility-factor));
+
+            iframe {
+              width: percentage((((850px / 1px) * $fm-visibility-factor) / 1920) / (9 / 16));
+            } 
+          }
+        }
+      }
+      &.fallback {
+        height: auto;
+
+        &.hero {
+          overflow: hidden;
+          @media #{$small-only} {
+            // show image
+            @include maintain-ratio(768 480);
+            width: auto;
+
+            &.portrait-support {
+              width: auto;
+              height: auto;
+              padding-top: 0.001rem;
+              padding-bottom: 0.001rem;
+              background: none;
+            }
+            &.collapsed-small {
+              height: 0;
+              padding-bottom: 0.001rem;
+            }
+          }
+          @media #{$medium-only} {
+            // show image
+            @include maintain-ratio(1920 1008);
+
+            &.collapsed-medium {
+              height: 0;
+              padding-bottom: 0.001rem;
+            }
+          }
+          @media #{$large-up} {
+            // show video
+            @include maintain-ratio(1920 1080);
+          }
+        }
+      }
+    }
+	}
+  @media #{$small-only} {
+    &.portrait-support {
+      width: auto;
+      height: auto;
+      padding-top: 0.001rem;
+      padding-bottom: 0.001rem;
+    }
+  }
+
+  video {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    left: 0;
+    right: 0;
+
+    // scale video (if original resolution is larger than browser width)
+    // or stetch video (if original resolution is smaller than browser width) to fit into browser
+    &.stretch-fit {
+      width: 100%;
+      max-width: 100%;
+    }
+    // crop both left and right evenly (if original resolution is larger than the browser width)
+    // or stretch video (if original resolution is smaller than browser width) to fit into browser
+    &.crop-fit {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      -ms-transform: translate(-50%, -50%);
+      -webkit-transform: translateX(-50%) translateY(-50%);
+      transform: translateX(-50%) translateY(-50%);
+      max-width: none;
+      max-height: 100%;
+    }
+  }
+}
